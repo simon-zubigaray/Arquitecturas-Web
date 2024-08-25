@@ -7,22 +7,25 @@ import java.util.List;
 public class PersonaDAOImpl implements PersonaDAO {
 
     private Connection connection;
+    private String driver;
 
-    public PersonaDAOImpl(String url, String user, String password) throws SQLException {
+    public PersonaDAOImpl(String url, String user, String password, String driver) throws SQLException {
+        this.driver = driver;
         this.connection = DriverManager.getConnection(url, user, password);
         connection.setAutoCommit(false);
         createTables(connection);
     }
 
     private void createTables(Connection connection) throws SQLException {
-        String sql = "CREATE TABLE IF NOT EXISTS personas (" +
-                "id BIGINT PRIMARY KEY GENERATED ALWAYS AS IDENTITY, " +
+        String table = "CREATE TABLE IF NOT EXISTS personas (" +
+                "id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
                 "nombre VARCHAR(255), " +
                 "apellido VARCHAR(255), " +
                 "edad INT)";
 
         try (Statement stmt = connection.createStatement()) {
-            stmt.executeUpdate(sql);
+            stmt.executeUpdate(table);
+            connection.commit();
         }
     }
 
@@ -34,6 +37,7 @@ public class PersonaDAOImpl implements PersonaDAO {
             stmt.setString(2, persona.getApellido());
             stmt.setInt(3, persona.getEdad());
             stmt.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -90,6 +94,7 @@ public class PersonaDAOImpl implements PersonaDAO {
             stmt.setInt(3, persona.getEdad());
             stmt.setLong(4, persona.getId());
             stmt.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -101,6 +106,7 @@ public class PersonaDAOImpl implements PersonaDAO {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, id);
             stmt.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             e.printStackTrace();
         }
