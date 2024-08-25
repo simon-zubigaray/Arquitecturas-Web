@@ -1,5 +1,6 @@
 package org.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PersonaServiceImpl implements PersonaService {
@@ -11,22 +12,47 @@ public class PersonaServiceImpl implements PersonaService {
     }
 
     @Override
-    public void agregarPersona(Persona persona) {
-        personaDAO.insertar(persona);
+    public void agregarPersona(PersonaDTO personaDTO) {
+        Persona per = new Persona(
+                personaDTO.getNombre(),
+                personaDTO.getApellido(),
+                personaDTO.getEdad()
+        );
+
+        personaDAO.insertar(per);
     }
 
     @Override
-    public Persona obtenerPersonaPorId(Long id) {
-        return personaDAO.obtenerPorId(id);
+    public PersonaDTO obtenerPersonaPorId(Long id) {
+        Persona persona = personaDAO.obtenerPorId(id);
+        return persona != null ? new PersonaDTO(
+                persona.getNombre(),
+                persona.getApellido(),
+                persona.getEdad()
+        ) : null;
     }
 
     @Override
-    public List<Persona> obtenerTodasLasPersonas() {
-        return personaDAO.obtenerTodas();
+    public List<PersonaDTO> obtenerTodasLasPersonas() {
+        List<Persona> personas = personaDAO.obtenerTodas();
+        List<PersonaDTO> personaDTOs = new ArrayList<>();
+        for (Persona persona : personas) {
+            personaDTOs.add(new PersonaDTO(
+                    persona.getNombre(),
+                    persona.getApellido(),
+                    persona.getEdad()
+            ));
+        }
+        return personaDTOs;
     }
 
     @Override
-    public void actualizarPersona(Persona persona) {
+    public void actualizarPersona(PersonaDTO personaDTO) {
+        Persona persona = new Persona(
+                personaDTO.getNombre(),
+                personaDTO.getApellido(),
+                personaDTO.getEdad()
+        );
         personaDAO.actualizar(persona);
     }
 
