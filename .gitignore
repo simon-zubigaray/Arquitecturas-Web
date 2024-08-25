@@ -1,3 +1,5 @@
+//Ejercicio 1
+
 # IntelliJ IDEA
 TP_1/Ejercicio_1/out/
 !TP_1/Ejercicio_1/**/src/main/**/out/
@@ -18,6 +20,8 @@ TP_1/Ejercicio_1/.idea/usage.statistics.xml
 TP_1/Ejercicio_1/.idea/dictionaries/
 TP_1/Ejercicio_1/.idea/shelf/
 
+//Ejercicio 2
+
 # IntelliJ IDEA
 TP_1/Ejercicio_2/out/
 !TP_1/Ejercicio_2/**/src/main/**/out/
@@ -37,3 +41,25 @@ TP_1/Ejercicio_2/.idea/tasks.xml
 TP_1/Ejercicio_2/.idea/usage.statistics.xml
 TP_1/Ejercicio_2/.idea/dictionaries/
 TP_1/Ejercicio_2/.idea/shelf/
+
+//Ejercicio 3
+
+# IntelliJ IDEA
+TP_1/Ejercicio_3/out/
+!TP_1/Ejercicio_3/**/src/main/**/out/
+!TP_1/Ejercicio_3/**/src/test/**/out/
+
+# Ignorar la mayoría de los archivos en .idea
+TP_1/Ejercicio_3/.idea/*
+
+# No ignorar archivos específicos que podrían ser necesarios
+!TP_1/Ejercicio_3/.idea/modules.xml
+!TP_1/Ejercicio_3/*.iml
+!TP_1/Ejercicio_3/.idea/vcs.xml  # Si usas Git desde IntelliJ
+
+# Ignorar archivos generados automáticamente
+TP_1/Ejercicio_3/.idea/workspace.xml
+TP_1/Ejercicio_3/.idea/tasks.xml
+TP_1/Ejercicio_3/.idea/usage.statistics.xml
+TP_1/Ejercicio_3/.idea/dictionaries/
+TP_1/Ejercicio_3/.idea/shelf/
