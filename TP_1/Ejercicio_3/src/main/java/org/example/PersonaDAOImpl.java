@@ -3,6 +3,7 @@ package org.example;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PersonaDAOImpl implements PersonaDAO {
 
@@ -17,16 +18,25 @@ public class PersonaDAOImpl implements PersonaDAO {
     }
 
     private void createTables(Connection connection) throws SQLException {
-        String table = "CREATE TABLE IF NOT EXISTS personas (" +
-                "id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
-                "nombre VARCHAR(255), " +
-                "apellido VARCHAR(255), " +
-                "edad INT)";
+        String driver_derby = "org.apache.derby.jdbc.EmbeddedDriver";
+        String table = "";
 
-        try (Statement stmt = connection.createStatement()) {
-            stmt.executeUpdate(table);
-            connection.commit();
+        if(!Objects.equals(this.driver, driver_derby)){
+            table = "CREATE TABLE IF NOT EXISTS personas (" +
+                    "id BIGINT AUTO_INCREMENT PRIMARY KEY, " +
+                    "nombre VARCHAR(255), " +
+                    "apellido VARCHAR(255), " +
+                    "edad INT)";
+        } else {
+            table = "CREATE TABLE personas (" +
+                    "id BIGINT GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1) PRIMARY KEY, " +
+                    "nombre VARCHAR(255), " +
+                    "apellido VARCHAR(255), " +
+                    "edad INT)";
         }
+
+        connection.prepareStatement(table).execute();
+        connection.commit();
     }
 
     @Override

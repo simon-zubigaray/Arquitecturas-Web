@@ -1,0 +1,13 @@
+----------------------------------------------------------------
+Sun Aug 25 19:49:30 ART 2024:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.17.1.0 - (1913217): instance a816c00e-0191-8bba-f083-00000f660b48 
+on database directory C:\Users\Zubigaray\Documents\Arquitecturas\TP_1\Ejercicio_3\MyDerbyDb with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@76ed5528 
+Loaded from file:/C:/Users/Zubigaray/.m2/repository/org/apache/derby/derby/10.17.1.0/derby-10.17.1.0.jar
+java.vendor=Oracle Corporation
+java.runtime.version=22.0.1+8-16
+user.dir=C:\Users\Zubigaray\Documents\Arquitecturas\TP_1\Ejercicio_3
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=null
+Database Class Loader started - derby.database.classpath=''
