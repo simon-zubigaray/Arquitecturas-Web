@@ -131,7 +131,8 @@ public class ProductoDAOImpl implements ProductoDAO{
             stmt.setFloat(2, nuevoValor);
             stmt.setInt(3, id);
             int rowsUpdated = stmt.executeUpdate(); // Ejecuta la actualización
-
+            connection.commit();
+            
             if (rowsUpdated == 0) {
                 throw new RuntimeException("No se pudo actualizar el producto con id " + id);
             }
@@ -145,8 +146,9 @@ public class ProductoDAOImpl implements ProductoDAO{
     public void eliminar(int id) {
         String sql = "DELETE FROM productos WHERE idProducto = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setLong(1, id); // Asigna el valor del ID al parámetro
+            stmt.setInt(1, id); // Asigna el valor del ID al parámetro
             stmt.executeUpdate(); // Ejecuta la eliminación
+            connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

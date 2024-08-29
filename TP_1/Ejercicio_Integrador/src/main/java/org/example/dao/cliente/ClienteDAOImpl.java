@@ -15,7 +15,12 @@ import java.util.List;
 public class ClienteDAOImpl implements ClienteDAO{
 
     private Connection connection;
-    private String driver;
+    private String url;
+
+    public ClienteDAOImpl (String url, String user, String password) throws SQLException {
+        this.connection = DriverManager.getConnection(url, user, password);
+        connection.setAutoCommit(false);
+    }
 
     @Override
     public void insertar(Cliente cliente) {
@@ -108,6 +113,7 @@ public class ClienteDAOImpl implements ClienteDAO{
             stmt.setString(2, nuevoEmail);
             stmt.setInt(3, id);
             int rowsUpdated = stmt.executeUpdate(); // Ejecuta la actualización
+            connection.commit();
 
             if (rowsUpdated == 0) {
                 throw new RuntimeException("No se pudo actualizar el producto con id " + id);
@@ -121,10 +127,12 @@ public class ClienteDAOImpl implements ClienteDAO{
     public void eliminar(int id) {
         String sql = "DELETE FROM clientes WHERE idCliente = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setLong(1, id); // Asigna el valor del ID al parámetro
+            stmt.setInt(1, id); // Asigna el valor del ID al parámetro
             stmt.executeUpdate(); // Ejecuta la eliminación
+            connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
 }

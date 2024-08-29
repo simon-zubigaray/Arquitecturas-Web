@@ -97,6 +97,8 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO{
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, cantidad);
             int rowsUpdated = stmt.executeUpdate(); // Ejecuta la actualización
+            connection.commit();
+
             if (rowsUpdated == 0) {
                 throw new RuntimeException("No se pudo actualizar el producto con id " + idFactura);
             }
@@ -109,9 +111,10 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO{
     public void eliminar(int idFactura, int idCliente) {
         String sql = "DELETE FROM facturas_producto WHERE idFactura = ? AND idCliente = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setLong(1, idFactura); // Asigna el valor del ID al parámetro
-            stmt.setLong(2, idCliente);
+            stmt.setInt(1, idFactura); // Asigna el valor del ID al parámetro
+            stmt.setInt(2, idCliente);
             stmt.executeUpdate(); // Ejecuta la eliminación
+            connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

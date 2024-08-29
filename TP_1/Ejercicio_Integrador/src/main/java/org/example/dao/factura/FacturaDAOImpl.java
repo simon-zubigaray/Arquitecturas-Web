@@ -103,6 +103,7 @@ public class FacturaDAOImpl implements FacturaDAO{
             stmt.setInt(1, nuevaIdCliente);
             stmt.setInt(2, idFactura);
             int rowsUpdated = stmt.executeUpdate(); // Ejecuta la actualización
+            connection.commit();
 
             if (rowsUpdated == 0) {
                 throw new RuntimeException("No se pudo actualizar el producto con id " + idFactura);
@@ -117,8 +118,9 @@ public class FacturaDAOImpl implements FacturaDAO{
     public void eliminar(int id) {
         String sql = "DELETE FROM facturas WHERE idFactura = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setLong(1, id); // Asigna el valor del ID al parámetro
+            stmt.setInt(1, id); // Asigna el valor del ID al parámetro
             stmt.executeUpdate(); // Ejecuta la eliminación
+            connection.commit();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
