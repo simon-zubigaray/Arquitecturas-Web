@@ -1,0 +1,8 @@
+Ventajas:
+-Mas seguridad
+-Facilita el mantenimiento y escalabilidad al tener todo separado
+-La base de datos se puede cambiar facilmente
+
+Desventajas:
+-Mayor curva de aprendizaje
+-Hay que codear mas ya que se agregan clases e interfaces

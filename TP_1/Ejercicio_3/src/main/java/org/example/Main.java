@@ -30,7 +30,7 @@ public class Main {
             PersonaDTO nuevaPersona3 = new PersonaDTO("Esteban", "Gomez", 41);
             personaService.agregarPersona(nuevaPersona3);
             personaService.eliminarPersona(13L);
-
+    
             // Obtener todas las personas
             List<PersonaDTO> personas = personaService.obtenerTodasLasPersonas();
             System.out.println("Todas las personas:");

@@ -63,3 +63,25 @@ TP_1/Ejercicio_3/.idea/tasks.xml
 TP_1/Ejercicio_3/.idea/usage.statistics.xml
 TP_1/Ejercicio_3/.idea/dictionaries/
 TP_1/Ejercicio_3/.idea/shelf/
+
+//Ejercicio Integrador
+
+# IntelliJ IDEA
+TP_1/Ejercicio_Integrador/out/
+!TP_1/Ejercicio_Integrador/**/src/main/**/out/
+!TP_1/Ejercicio_Integrador/**/src/test/**/out/
+
+# Ignorar la mayoría de los archivos en .idea
+TP_1/Ejercicio_Integrador/.idea/*
+
+# No ignorar archivos específicos que podrían ser necesarios
+!TP_1/Ejercicio_Integrador/.idea/modules.xml
+!TP_1/Ejercicio_Integrador/*.iml
+!TP_1/Ejercicio_Integrador/.idea/vcs.xml  # Si usas Git desde IntelliJ
+
+# Ignorar archivos generados automáticamente
+TP_1/Ejercicio_Integrador/.idea/workspace.xml
+TP_1/Ejercicio_Integrador/.idea/tasks.xml
+TP_1/Ejercicio_Integrador/.idea/usage.statistics.xml
+TP_1/Ejercicio_Integrador/.idea/dictionaries/
+TP_1/Ejercicio_Integrador/.idea/shelf/
