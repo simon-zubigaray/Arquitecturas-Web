@@ -14,7 +14,12 @@ import java.util.List;
 public class ProductoDAOImpl implements ProductoDAO{
 
     private Connection connection;
-    private String driver;
+    private String url;
+
+    public ProductoDAOImpl (String url, String user, String password) throws SQLException {
+        this.connection = DriverManager.getConnection(url, user, password);
+        connection.setAutoCommit(false);
+    }
 
     @Override
     public void insertar(Producto producto) {

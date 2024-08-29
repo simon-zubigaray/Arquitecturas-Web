@@ -15,7 +15,12 @@ import java.util.List;
 public class FacturaProductoDAOImpl implements FacturaProductoDAO{
 
     private Connection connection;
-    private String driver;
+    private String url;
+
+    public FacturaProductoDAOImpl (String url, String user, String password) throws SQLException {
+        this.connection = DriverManager.getConnection(url, user, password);
+        connection.setAutoCommit(false);
+    }
 
     @Override
     public void insertar(FacturaProducto facturaProducto) {
@@ -24,29 +29,35 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO{
 
     @Override
     public void insertarDesdeArchivosCSV(String path) throws IOException {
-        String sql = "INSERT INTO facturas (idFactura, idCliente, cantidad) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO factura_producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
 
         try (
                 PreparedStatement stmt = connection.prepareStatement(sql);
                 CSVParser parser = CSVFormat.DEFAULT.withHeader().parse(new FileReader(path))
         ){
+            connection.setAutoCommit(false); // Desactiva el auto-commit
 
             for (CSVRecord row : parser) {
                 try {
-                    //En el get van los nombres de las columnas de la tabla de la base de datos, en este caso factura_producto
+                    // Corregido idCliente a idProducto
                     stmt.setInt(1, Integer.parseInt(row.get("idFactura")));
-                    stmt.setInt(2, Integer.parseInt(row.get("idCliente")));
+                    stmt.setInt(2, Integer.parseInt(row.get("idProducto")));
                     stmt.setInt(3, Integer.parseInt(row.get("cantidad")));
                     stmt.executeUpdate();
                 } catch (SQLException e) {
                     e.printStackTrace();
-                    connection.rollback();  // Rollback en caso de error
+                    connection.rollback();  // Rollback en caso de error en un registro
                 }
             }
 
             connection.commit();  // Commit de la transacción completa después de todas las inserciones
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
+            try {
+                connection.rollback(); // Rollback general en caso de error en la conexión o preparación
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
         }
     }
 

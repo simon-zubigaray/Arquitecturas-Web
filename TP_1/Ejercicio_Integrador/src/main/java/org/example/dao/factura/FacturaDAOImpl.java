@@ -15,7 +15,12 @@ import java.util.List;
 public class FacturaDAOImpl implements FacturaDAO{
 
     private Connection connection;
-    private String driver;
+    private String url;
+
+    public FacturaDAOImpl (String url, String user, String password) throws SQLException {
+        this.connection = DriverManager.getConnection(url, user, password);
+        connection.setAutoCommit(false);
+    }
 
     @Override
     public void insertar(Factura factura) {
