@@ -10,6 +10,6 @@ public interface FacturaDAO {
     void insertarDesdeArchivosCSV(String path) throws IOException;
     Factura obtenerPorId(int id);
     List<Factura> obtenerTodas();
-    void actualizar(Factura factura);
-    void eliminar(Long id);
+    void actualizar(int idFactura, int nuevaIdCliente);
+    void eliminar(int id);
 }

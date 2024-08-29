@@ -4,12 +4,12 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.example.entities.Factura;
+import org.example.entities.Producto;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FacturaDAOImpl implements FacturaDAO{
@@ -19,7 +19,16 @@ public class FacturaDAOImpl implements FacturaDAO{
 
     @Override
     public void insertar(Factura factura) {
+        String sql = "INSERT INTO facturas (idFactura, idCliente) VALUES (?, ?)";
 
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, factura.getIdFactura());
+            stmt.setInt(2, factura.getIdCliente());
+            stmt.executeUpdate();
+            connection.commit();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -51,21 +60,67 @@ public class FacturaDAOImpl implements FacturaDAO{
 
     @Override
     public Factura obtenerPorId(int id) {
-        return null;
+        String sql = "SELECT * FROM facturas WHERE idFactura = ?";
+        Factura factura = null;
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    factura = new Factura(
+                            rs.getInt("idFactura"),
+                            rs.getInt("idCliente")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return factura;
     }
 
     @Override
     public List<Factura> obtenerTodas() {
-        return List.of();
+        String sql = "SELECT * FROM productos";
+        List<Factura> facturas = new ArrayList<>();
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                facturas.add(new Factura(
+                        rs.getInt("idFactura"),
+                        rs.getInt("idCliente")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return facturas;
     }
 
     @Override
-    public void actualizar(Factura factura) {
+    public void actualizar(int idFactura, int nuevaIdCliente) {
+        String sql = "UPDATE facturas SET idCliente = ? WHERE idFactura = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, nuevaIdCliente);
+            stmt.setInt(2, idFactura);
+            int rowsUpdated = stmt.executeUpdate(); // Ejecuta la actualización
 
+            if (rowsUpdated == 0) {
+                throw new RuntimeException("No se pudo actualizar el producto con id " + idFactura);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    @Override
-    public void eliminar(Long id) {
 
+    @Override
+    public void eliminar(int id) {
+        String sql = "DELETE FROM facturas WHERE idFactura = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setLong(1, id); // Asigna el valor del ID al parámetro
+            stmt.executeUpdate(); // Ejecuta la eliminación
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

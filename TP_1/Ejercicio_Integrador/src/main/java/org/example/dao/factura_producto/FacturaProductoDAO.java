@@ -8,8 +8,8 @@ import java.util.List;
 public interface FacturaProductoDAO {
     void insertar(FacturaProducto facturaProducto);
     void insertarDesdeArchivosCSV(String path) throws IOException;
-    FacturaProducto obtenerPorId(int id);
+    FacturaProducto obtenerPorId(int idFactura, int idCliente);
     List<FacturaProducto> obtenerTodas();
-    void actualizar(FacturaProducto facturaProducto);
-    void eliminar(Long id);
+    void actualizar(int idFactura, int idCliente, int cantidad);
+    void eliminar(int idFactura, int idCliente);
 }

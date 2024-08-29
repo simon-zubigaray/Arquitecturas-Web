@@ -142,7 +142,7 @@ public class ProductoDAOImpl implements ProductoDAO{
 
 
     @Override
-    public void eliminar(Long id) {
+    public void eliminar(int id) {
         String sql = "DELETE FROM productos WHERE idProducto = ?";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, id); // Asigna el valor del ID al parámetro

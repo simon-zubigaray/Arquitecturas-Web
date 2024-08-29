@@ -13,5 +13,5 @@ public interface ProductoDAO {
     Producto obtenerElQueMasRecaudo();
     List<Producto> obtenerTodas();
     void actualizar(int id, String nuevoNombre, float nuevoValor);
-    void eliminar(Long id);
+    void eliminar(int id);
 }

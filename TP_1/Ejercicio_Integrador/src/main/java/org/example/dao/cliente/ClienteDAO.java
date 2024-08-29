@@ -10,6 +10,6 @@ public interface ClienteDAO {
     void insertarDesdeArchivosCSV(String path) throws IOException;
     Cliente obtenerPorId(int id);
     List<Cliente> obtenerTodas();
-    void actualizar(Cliente cliente);
-    void eliminar(Long id);
+    void actualizar(int id, String nuevoNombre, String nuevoEmail);
+    void eliminar(int id);
 }
